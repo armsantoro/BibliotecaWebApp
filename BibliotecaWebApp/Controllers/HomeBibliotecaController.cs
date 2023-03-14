@@ -6,6 +6,7 @@ namespace BibliotecaWebApp.Controllers
     {
         public IActionResult Index()
         {
+
             return View();
         }
     }

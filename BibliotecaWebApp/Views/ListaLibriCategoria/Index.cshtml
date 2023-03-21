@@ -1,0 +1,64 @@
+﻿<div class="row mb-4">
+    <div class="col-12">
+        <form asp-controller="ListaLibriCategoria" asp-action="AggiungiLibro" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nomeLibro">Inserisci nuovo Nome: </label>
+                    <input type="text" class="form-control" id="nomeLibro" name="nomeLibro" placeholder="Nome libro" required />
+                </div>
+
+@*                RIPRENDERE DA QUI!! SISTEMARE 
+*@                <input type="hidden" name="catLib" value=Model./>
+                <div class="form-group col-md-6">
+                    <label for="annoPub">Inserisci anno pubblicazione: </label>
+                    <input type="text" class="form-control" id="annoPub" name="annoPub" placeholder="anno Pubblicazione" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="isbn">Inserisci nuovo ISBN: </label>
+                    <input type="text" class="form-control" id="isbn" name="isbn" placeholder="ISBN" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="statoLib">Inserisci stato libro: </label>
+                    <input type="text" class="form-control" id="statoLib" name="statoLib" placeholder="Stato libro" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="numCopie">Inserisci nuomero di copie: </label>
+                    <input type="text" class="form-control" id="numCopie" name="numCopie" placeholder="Numero Copie" required />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Aggiungi libro
+            </button>
+        </form>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h1>@ViewData["Title"]</h1>
+
+    <table class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>Nome Libro</th>
+                <th>Categoria</th>
+                <th>Anno Pubblicazione</th>
+                <th>ISBN</th>
+                <th>Stato Libro</th>
+                <th>Numero Copie Presenti</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var libro in Model)
+            {
+                <tr>
+                    <td>@libro.Nome_Libro</td>
+                    <td>@libro.Categoria_Libro</td>
+                    <td>@libro.Anno_Pubblicazione</td>
+                    <td>@libro.ISBN</td>
+                    <td>@libro.Stato_Libro</td>
+                    <td>@libro.Numero_Copie_Presenti</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

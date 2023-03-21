@@ -1,5 +1,76 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿
+<div class="container mt-5">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <form asp-controller="HomeBiblioteca" asp-action="AggiungiCategoria" method="post" enctype="multipart/form-data">
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Genere">Inserisci nuova categoria</label>
+                        <input type="text" class="form-control" id="Genere" name="Genere" placeholder="Nome categoria" required />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="Immagine">Carica Immagine</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="Immagine" name="Immagine">
+                            <label class="custom-file-label" for="Immagine">Scegli file</label>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Aggiungi categoria
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div class="row">
+        @{
+            int count = 0;
+        }
+        @foreach (var categoria in Model)
+        {
+            count++;
+            string bgColorClass = $"card-bg-{(count % 4) + 1}";
+            string backgroundImage = ByteArrayToBase64Image(categoria.Immagine);
+            string backgroundStyle = !string.IsNullOrEmpty(backgroundImage) ? $"background-image: url('{backgroundImage}');" : "";
+
+            <div class="col-md-4 col-sm-6 mb-4">
+                <div class="card h-100 border-0 shadow-sm @bgColorClass" style="@backgroundStyle">
+                    <div class="card-body">
+                        <h5 class="card-title">@categoria.Genere</h5>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a asp-controller="ListaLibriCategoria" asp-action="Index" asp-route-genere="@categoria.Genere" class="btn btn-danger">Visualizza libri</a>
+                        <a asp-controller="HomeBiblioteca" asp-action="RimuoviCategoria" asp-route-id="@categoria.ID" class="btn btn-danger">Elimina categoria</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@functions {
+    public string ByteArrayToBase64Image(byte[] byteArray)
+    {
+        if (byteArray == null)
+        {
+            return "";
+        }
+        return $"data:image/jpeg;base64,{Convert.ToBase64String(byteArray)}";
+    }
 }
+
+@section Scripts {
+    <script>
+        document.querySelector('.custom-file-input').addEventListener('change', function (e) {
+            var fileName = e.target.files[0].name;
+            var nextSibling = e.target.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    </script>
+}
+

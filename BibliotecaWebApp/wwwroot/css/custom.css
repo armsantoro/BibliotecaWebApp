@@ -1,0 +1,39 @@
+﻿body {
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    border-radius: 5px;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.card-bg-1 {
+    background-color: #ff7f7f;
+}
+
+.card-bg-2 {
+    background-color: #7fd3ff;
+}
+
+.card-bg-3 {
+    background-color: #a0ff7f;
+}
+
+.card-bg-4 {
+    background-color: #fa5555;
+}
+
+.btn-primary {
+    background-color: #0073e6;
+    border-color: #0073e6;
+}
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }

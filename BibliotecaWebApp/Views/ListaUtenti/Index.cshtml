@@ -1,0 +1,58 @@
+﻿<div class="row mb-4">
+    <div class="col-12">
+        <form asp-controller="ListaUtenti" asp-action="AggiungiUtente" method="post">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nome">Inserisci Nome utente: </label>
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Nome Utente" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="cognome">Inserisci Cognome utente: </label>
+                    <input type="text" class="form-control" id="cognome" name="cognome" placeholder="Cognome Utente" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="indirizzo">Inserisci indirizzo utente: </label>
+                    <input type="text" class="form-control" id="indirizzo" name="indirizzo" placeholder="Indirizzo Utente" required />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="ISBN">Inserisci ISBN: </label>
+                    <input type="text" class="form-control" id="ISBN" name="ISBN" placeholder="ISBN Libro" required />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Aggiungi utente
+            </button>
+        </form>
+    </div>
+</div>
+
+@using (Html.BeginForm("EliminaUtenti", "ListaUtenti", FormMethod.Post))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Cognome</th>
+                <th>Indirizzo</th>
+                <th>Libro</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var utente in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="idUtenti" value="@utente.ID" />
+                    </td>
+                    <td>@utente.Nome</td>
+                    <td>@utente.Cognome</td>
+                    <td>@utente.Indirizzo</td>
+                    <td>@utente.ISBN</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-danger">Elimina utenti selezionati</button>
+}
+    

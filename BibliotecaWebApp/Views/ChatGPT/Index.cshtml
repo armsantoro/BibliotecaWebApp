@@ -1,0 +1,18 @@
+﻿
+<h1>ChatGPT</h1>
+
+@if (Model.IsSuccess)
+{
+    <p>Completions:</p>
+    <ul>
+        @foreach (var completion in Model.Result.Completions)
+        {
+            <li>@completion.Text</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Unable to retrieve completions.</p>
+    <p>Error message: @Model.ErrorMessage</p>
+}

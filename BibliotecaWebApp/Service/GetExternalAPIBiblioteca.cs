@@ -1,4 +1,5 @@
-﻿using BibliotecaWebApp.Models;
+﻿using BibliotecaWebApp.Database;
+using BibliotecaWebApp.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text.Json.Nodes;
@@ -8,9 +9,11 @@ namespace BibliotecaWebApp.Service
     public class GetExternalAPIBiblioteca
     {
         private readonly HttpClient _httpClient;
-        public GetExternalAPIBiblioteca(HttpClient httpClient)
+        private readonly AppDbContext _appDbContext;
+        public GetExternalAPIBiblioteca(HttpClient httpClient, AppDbContext context)
         {
             _httpClient = httpClient;
+            _appDbContext = context;
         }
 
         public async Task<List<LibroAPIModel>> GetLibriByCategoria(string categoria)
@@ -32,6 +35,25 @@ namespace BibliotecaWebApp.Service
             }
 
             return libri;
+        }
+
+        public async Task<List<UtenteModelDTO>> GetUtentiAttivi()
+        {
+            JsonValue result = await _httpClient.GetFromJsonAsync<JsonValue>("https://localhost:7077/Utente/GetUtentiAttivi");
+            List<JObject> jsonObjResult = JsonConvert.DeserializeObject<List<JObject>>(result.ToString());
+
+            List<UtenteModelDTO> utenti = new List<UtenteModelDTO>();
+            foreach(var item in jsonObjResult)
+            {
+                UtenteModelDTO utente = new UtenteModelDTO();
+                utente.ID = Guid.Parse(item["id"].ToString());
+                utente.Nome = item["nome_Utente"].ToString();
+                utente.Cognome = item["cognome_Utente"].ToString();
+                utente.Indirizzo = item["indirizzo"].ToString();
+                utente.ISBN = item["libro"].ToString();
+                utenti.Add(utente);
+            }
+            return utenti;
         }
     }
 }

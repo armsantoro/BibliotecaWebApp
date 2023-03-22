@@ -23,15 +23,17 @@ namespace BibliotecaWebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AggiungiLibro(string nomeLibro, string catLibro, int annoPub, string isbn, Guid statoLib, int numCopie)
+        public async Task<IActionResult> AggiungiLibro(string nomeLibro, string catLibro, int annoPub, string isbn, string statoLib, int numCopie)
         {
             CategorieModel categoriaLibro = _appDbContext.Categoria_Immagine_Libro.Where(categoria => categoria.Genere == catLibro).First();
+            StatoLibroModel statoLibro = _appDbContext.Stato_Libro.Where(stato => stato.Stato == statoLib).First();
+            
             LibroModel newLibro = new LibroModel();
             newLibro.Nome_Libro = nomeLibro;
             newLibro.ID_Categoria_Libro = categoriaLibro.ID;
             newLibro.Anno_Pubblicazione = annoPub;
             newLibro.ISBN = isbn;
-            newLibro.ID_Stato_Libro = statoLib;
+            newLibro.ID_Stato_Libro = statoLibro.ID;
             newLibro.Numero_Copie_Presenti = numCopie;
             newLibro.Data_Inserimento_Record = DateTime.Now;
             newLibro.Stato_Record = true;
